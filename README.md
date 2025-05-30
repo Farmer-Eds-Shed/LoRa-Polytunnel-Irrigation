@@ -16,11 +16,6 @@ Supports both a web-based control interface and MQTT integration for automation 
 
 ---
 
-## 📷 Screenshot
-
-![Web UI Screenshot](docs/ui-screenshot.png) <!-- optional if you upload an image -->
-
----
 
 ## 🔧 Hardware
 
@@ -79,5 +74,5 @@ Update your `ssid`, `password`, `mqtt_server`, `mqtt_user`, and `mqtt_pass` at t
 
 ## 🧑‍🌾 Created By
 
-[Eddie Maher – Farmer Ed's Shed](https://github.com/Farmer-Eds-Shed)  
+[Farmer Ed](https://github.com/Farmer-Eds-Shed)  
 
