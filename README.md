@@ -24,6 +24,7 @@ Supports both a web-based control interface and MQTT integration for automation 
 - Relays for zones + pump (on the controller side)
 - Internet-connected Wi-Fi
 - **Heltec CubeCell**
+- 868 MHz LoRa radio
 - Soil Moisture Sensor
 
 ---
