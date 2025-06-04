@@ -23,6 +23,8 @@ Supports both a web-based control interface and MQTT integration for automation 
 - 868 MHz LoRa radio
 - Relays for zones + pump (on the controller side)
 - Internet-connected Wi-Fi
+- **Heltec CubeCell**
+- Soil Moisture Sensor
 
 ---
 
@@ -32,6 +34,7 @@ Supports both a web-based control interface and MQTT integration for automation 
 |--------------------|-----------|------------------------|--------------------------------------|
 | `irrigation/cmd`   | ⬅️ Sub     | `Z1:10`, `Z1C`, `REBOOT`, `STATUS` | Control commands to be sent over LoRa |
 | `irrigation/status`| ➡️ Pub     | `Pump: ON; Zones: 12` | Current zone/pump status from controller |
+| `irrigation/sensor/soil`| ➡️ Pub     | `Moist: 12; Wet: 12` | Soil Moisture Sensor |
 
 ---
 
