@@ -7,7 +7,7 @@ Supports both a web-based control interface and MQTT integration for automation 
 
 ## 🚀 Features
 
-- 🛰️ LoRa message encryption (XOR-based) for secure command/control  
+- 🛰️ LoRa message encryption (XOR-based) for secure command/control - (Not hardened security, but enough for a sprinkler system...)
 - 🌐 Web-based control panel (HTML/JS) for manual operation  
 - 🔄 MQTT support for remote automation  
 - ✅ Visual feedback of active zones & pump status  
