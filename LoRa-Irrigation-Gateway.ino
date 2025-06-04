@@ -11,8 +11,8 @@ const char* password = "password";
 
 // MQTT
 const char* mqtt_server = "192.168.1.100";
-const char* mqtt_user = "mqttUser";
-const char* mqtt_pass = "mqttPass";
+const char* mqtt_user = "user";
+const char* mqtt_pass = "password";
 WiFiClient espClient;
 PubSubClient client(espClient);
 
@@ -178,19 +178,38 @@ void loop() {
       encrypted += (char)LoRa.read();
     }
 
-    lastStatusReply = xorDecrypt(encrypted);
-    String reply = lastStatusReply;
-    Serial.println("📥 LoRa RX (decrypted): " + reply);
-    lastStatus = reply;
+    String decrypted = xorDecrypt(encrypted);
+    Serial.println("📥 LoRa RX (decrypted): " + decrypted);
     lastReceiveTime = now;
     awaitingReply = false;
-    statusUpdated = true;
 
-    if (reply.indexOf("Zones:") != -1 || reply.indexOf("Pump:") != -1) {
-      sentStatusSinceLastCommand = true;
+    if (decrypted.startsWith("SENSOR|")) {
+      int secondPipe = decrypted.indexOf('|', 7);
+      if (secondPipe != -1) {
+        String nodeId = decrypted.substring(7, secondPipe);
+        String jsonPayload = decrypted.substring(secondPipe + 1);
+        String topic = "irrigation/sensors/" + nodeId;
+
+        Serial.println("📡 Forwarding sensor data:");
+        Serial.println(" → Topic: " + topic);
+        Serial.println(" → Payload: " + jsonPayload);
+
+        client.publish(topic.c_str(), jsonPayload.c_str());
+      } else {
+        Serial.println("⚠️ SENSOR| message malformed");
+      }
     }
+    else if (decrypted.indexOf("Zones:") != -1 || decrypted.indexOf("Pump:") != -1) {
+      lastStatusReply = decrypted;
+      lastStatus = decrypted;
+      sentStatusSinceLastCommand = true;
+      statusUpdated = true;
 
-    client.publish("irrigation/status", reply.c_str());
+      client.publish("irrigation/status", decrypted.c_str());
+    }
+    else {
+      Serial.println("ℹ️ Unknown message format");
+    }
 
     LoRa.receive();
   }
